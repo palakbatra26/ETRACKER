@@ -7,6 +7,8 @@ export const list = asyncHandler(async (req, res) => {
   const filter = { user: req.userId };
   if (req.query.type) filter.type = req.query.type;
   if (req.query.category) filter.category = req.query.category;
+  if (req.query.paymentMethod) filter.paymentMethod = req.query.paymentMethod;
+  if (req.query.tag) filter.tags = req.query.tag;
   if (req.query.from || req.query.to) {
     filter.date = {};
     if (req.query.from) filter.date.$gte = new Date(req.query.from);
@@ -43,8 +45,14 @@ export const remove = asyncHandler(async (req, res) => {
 });
 
 export const summary = asyncHandler(async (req, res) => {
+  const match = { user: new (await import('mongoose')).default.Types.ObjectId(req.userId) };
+  if (req.query.from || req.query.to) {
+    match.date = {};
+    if (req.query.from) match.date.$gte = new Date(req.query.from);
+    if (req.query.to) match.date.$lt = new Date(req.query.to);
+  }
   const agg = await Transaction.aggregate([
-    { $match: { user: new (await import('mongoose')).default.Types.ObjectId(req.userId) } },
+    { $match: match },
     { $group: { _id: '$type', total: { $sum: '$amount' } } },
   ]);
   let income = 0, expense = 0;

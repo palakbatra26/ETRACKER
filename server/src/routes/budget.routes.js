@@ -7,5 +7,6 @@ import { budgetSchema } from '../validators/schemas.js';
 const r = Router();
 r.use(requireAuth);
 r.get('/current', c.current);
+r.get('/history', c.history);
 r.put('/', validate(budgetSchema), c.upsert);
 export default r;

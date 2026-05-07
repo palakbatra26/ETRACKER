@@ -15,6 +15,8 @@ export const transactionSchema = z.object({
   amount: z.number().positive(),
   type: z.enum(['income', 'expense']),
   category: z.string().trim().min(1).max(50),
+  tags: z.array(z.string().trim().min(1).max(30)).max(10).optional().default([]),
+  paymentMethod: z.enum(['Cash', 'UPI', 'Credit Card', 'Debit Card', 'Bank Transfer', 'Other']).optional().default('Cash'),
   date: z.string().datetime().or(z.string().min(1)),
   notes: z.string().max(500).optional().default(''),
 });
@@ -22,6 +24,18 @@ export const transactionSchema = z.object({
 export const budgetSchema = z.object({
   month: z.string().regex(/^\d{4}-\d{2}$/),
   amount: z.number().nonnegative(),
+  categories: z.array(z.object({
+    category: z.string().trim().min(1).max(50),
+    amount: z.number().nonnegative(),
+  })).max(30).optional().default([]),
+});
+
+export const savingsGoalSchema = z.object({
+  name: z.string().trim().min(1).max(80),
+  targetAmount: z.number().positive(),
+  currentAmount: z.number().nonnegative().optional().default(0),
+  targetDate: z.string().min(1).optional().or(z.literal('')),
+  notes: z.string().max(300).optional().default(''),
 });
 
 export const recurringSchema = z.object({
