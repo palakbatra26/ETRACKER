@@ -7,6 +7,7 @@ const items = [
   { to: '/savings-goals', label: 'Savings Goals', icon: '$' },
   { to: '/recurring', label: 'Recurring', icon: 'RC' },
   { to: '/reports', label: 'Reports', icon: 'RP' },
+  { to: '/workspaces', label: 'Workspaces', icon: 'WS' },
 ];
 
 export default function Sidebar({ open, onClose }) {

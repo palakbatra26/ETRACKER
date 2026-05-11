@@ -13,8 +13,11 @@ const rangeForMonth = (month) => {
   return { from: `${month}-01`, to: next };
 };
 
+const CURRENCIES = ['USD', 'EUR', 'GBP', 'INR', 'JPY', 'CAD'];
+
 export default function Dashboard() {
   const [month, setMonth] = useState(new Date().toISOString().slice(0, 7));
+  const [currency, setCurrency] = useState('USD');
   const [data, setData] = useState(null);
   const load = async () => {
     setData(null);
@@ -33,7 +36,12 @@ export default function Dashboard() {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <h1 className="text-2xl font-bold">Dashboard</h1>
-        <input type="month" className="input w-auto" value={month} onChange={e=>setMonth(e.target.value)} />
+        <div className="flex gap-2">
+          <select className="input w-auto" value={currency} onChange={e=>setCurrency(e.target.value)}>
+            {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <input type="month" className="input w-auto" value={month} onChange={e=>setMonth(e.target.value)} />
+        </div>
       </div>
       <StatCards summary={data.summary} />
       <div className="grid md:grid-cols-3 gap-6">
@@ -42,7 +50,15 @@ export default function Dashboard() {
       </div>
       <div className="grid md:grid-cols-2 gap-6">
         <div className="card"><h3 className="font-semibold mb-4">Category Breakdown</h3><CategoryPie data={data.charts.pie} /></div>
-        <div className="card"><h3 className="font-semibold mb-4">Daily Trend</h3><DailyLine data={data.charts.daily} /></div>
+        <div className="card">
+          <h3 className="font-semibold mb-4">Daily Trend</h3>
+          <DailyLine data={data.charts.daily} />
+          {data.insights.projectedMonthly && (
+            <div className="mt-4 p-3 bg-brand/10 border border-brand/20 rounded-lg text-sm">
+              💡 Based on your daily average, you are projected to spend <b>${data.insights.projectedMonthly.toFixed(2)}</b> this month.
+            </div>
+          )}
+        </div>
       </div>
       <InsightsCard insights={data.insights} />
     </div>

@@ -33,6 +33,17 @@ export default function Reports() {
     pdf.save(`report-${month}.pdf`);
   };
 
+  const exportCSV = () => {
+    const headers = 'Date,Type,Category,Amount\n';
+    const rows = data.list.map(t => `${new Date(t.date).toLocaleDateString()},${t.type},${t.category},${t.amount}`);
+    const blob = new Blob([headers + rows.join('\n')], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `report-${month}.csv`;
+    a.click();
+  };
+
   if (!data) return <div>Loading…</div>;
 
   return (
@@ -42,6 +53,7 @@ export default function Reports() {
         <div className="flex gap-2">
           <input type="month" className="input w-auto" value={month} onChange={e=>setMonth(e.target.value)}/>
           <button className="btn-primary" onClick={exportPDF}>Export PDF</button>
+          <button className="btn-ghost" onClick={exportCSV}>Export CSV</button>
         </div>
       </div>
 

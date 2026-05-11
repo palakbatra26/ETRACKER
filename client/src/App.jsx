@@ -8,6 +8,7 @@ import Budget from './pages/Budget.jsx';
 import SavingsGoals from './pages/SavingsGoals.jsx';
 import Recurring from './pages/Recurring.jsx';
 import Reports from './pages/Reports.jsx';
+import Workspaces from './pages/Workspaces.jsx';
 import Protected from './components/Protected.jsx';
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/savings-goals" element={<SavingsGoals />} />
         <Route path="/recurring" element={<Recurring />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/workspaces" element={<Workspaces />} />
       </Route>
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
