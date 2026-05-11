@@ -11,6 +11,7 @@ import txRoutes from './routes/transaction.routes.js';
 import budgetRoutes from './routes/budget.routes.js';
 import recurringRoutes from './routes/recurring.routes.js';
 import savingsGoalRoutes from './routes/savingsGoal.routes.js';
+import workspaceRoutes from './routes/workspace.routes.js';
 import { errorHandler, notFound } from './middleware/error.js';
 import { startRecurringJob } from './jobs/recurring.job.js';
 
@@ -29,6 +30,7 @@ app.use('/api/transactions', txRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/recurring', recurringRoutes);
 app.use('/api/savings-goals', savingsGoalRoutes);
+app.use('/api/workspaces', workspaceRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

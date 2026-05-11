@@ -87,6 +87,7 @@ export const insights = asyncHandler(async (req, res) => {
     totalExpense,
     topCategory: top ? { category: top[0], amount: top[1], percent: Math.round((top[1] / totalExpense) * 100) } : null,
     averageDaily: totalExpense / days,
+    projectedMonthly: (totalExpense / days) * 30,
     breakdown: Object.entries(byCat).map(([category, amount]) => ({
       category, amount, percent: totalExpense ? Math.round((amount / totalExpense) * 100) : 0,
     })),

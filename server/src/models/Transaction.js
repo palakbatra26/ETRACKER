@@ -13,6 +13,8 @@ const txSchema = new mongoose.Schema({
   },
   date:     { type: Date, required: true, default: Date.now, index: true },
   notes:    { type: String, maxlength: 500 },
+  workspace: { type: mongoose.Schema.Types.ObjectId, ref: 'Workspace', index: true },
+  currency:  { type: String, default: 'USD' },
 }, { timestamps: true });
 
 txSchema.index({ user: 1, date: -1 });

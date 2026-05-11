@@ -44,10 +44,13 @@ See `server/API.md`.
 ## Features
 - JWT auth (register / login / refresh / logout) + bcrypt
 - Transactions CRUD with category, type, date, notes
+- Smart transaction tags and payment method tracking
 - Pagination + filters (date range, category, type) + search
+- Dashboard month filter
 - Dashboard with Recharts (Bar / Pie / Line)
 - Monthly insights (top category, average daily, % breakdown)
-- Monthly budget with 80% / exceeded alerts
+- Monthly and category-wise budgets with 50% / 80% / exceeded alerts
+- Savings goals with target progress
 - Recurring transactions via node-cron (daily 00:05)
 - PDF export of monthly report
 - Dark mode, responsive sidebar layout, loading + error states
